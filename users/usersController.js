@@ -57,7 +57,7 @@ const register = async (req, res, next) => {
 
 //LOGIN INGRESO (GET)
 //mostramos el formulario de recuperación de contraseña
-const ingreso = async (req, res, next) => {
+const ingreso = (req, res, next) => {
   res.render("ingreso")
 }
 
