@@ -59,7 +59,6 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
   const cleanBody = matchedData(req)
   const dbResponse = await loginUser(req.body.email);
-  res.render("login")
   if (!dbResponse.length) return next();
   if (await checkPassword(req.body.password, dbResponse[0].password)) {
     const user = {
@@ -72,9 +71,8 @@ const login = async (req, res, next) => {
       token: await tokenSign(user, "2h"),
       user,
     };
-    res
-      .status(200)
-      .json({ message: `User ${user.name} Logged in!`, Token_info: tokenData });
+    res.render("login", {user, checkPassword, cleanBody})
+    res.status(200).json({ message: `User ${user.name} Logged in!`, Token_info: tokenData });
   } else {
     let error = new Error();
     error.status = 401;
