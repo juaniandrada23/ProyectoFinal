@@ -55,6 +55,11 @@ const register = async (req, res, next) => {
   res.status(201).json({ user: req.body.name, Token_Info: tokenData });
 };
 
+//Mostramos el form de la sesion 
+const newSesion = async (req, res, next) => {
+  const user = req.params.user
+  res.render("pantalla", {user})
+}
 //Login user
 const login = async (req, res, next) => {
   const cleanBody = matchedData(req)
@@ -71,7 +76,6 @@ const login = async (req, res, next) => {
       token: await tokenSign(user, "2h"),
       user,
     };
-    res.render("login");
     res.status(200).json({ message: `User ${user.name} Logged in!`, Token_info: tokenData });
   } else {
     let error = new Error();
@@ -153,4 +157,4 @@ const removeOne = async (req, res, next) => {
   dbResponse.affectedRows ? res.status(204).end() : next();
 };
 
-module.exports = { listAll, listOne, register, login, forgot, reset, saveNewPass, removeOne, editOne };
+module.exports = { listAll, listOne, register, login, forgot, newSesion, reset, saveNewPass, removeOne, editOne };
