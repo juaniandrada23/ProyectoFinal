@@ -17,6 +17,8 @@ router.post("/register", fileUpload.single("file"), validatorCreateUser, registe
 //Login user
 router.post("/login", validatorLoginUser, login)
 
+router.get("/ingreso", ingreso) // mostramos el formulario de inicio de sesion 
+
 //Forgot password
 router.post("/forgot-password", forgot) //desde el front entra el mail del usuario quen olvidó password
 //Create and send magic link

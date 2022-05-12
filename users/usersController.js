@@ -55,6 +55,12 @@ const register = async (req, res, next) => {
   res.status(201).json({ user: req.body.name, Token_Info: tokenData });
 };
 
+//LOGIN INGRESO (GET)
+//mostramos el formulario de recuperación de contraseña
+const ingreso = async (req, res, next) => {
+  res.render("ingreso")
+}
+
 //Login user
 const login = async (req, res, next) => {
   const cleanBody = matchedData(req)
@@ -72,7 +78,6 @@ const login = async (req, res, next) => {
       user,
     };
     res.status(200).json({ message: `User ${user.name} Logged in!`, Token_info: tokenData });
-    res.render("login")
   } else {
     let error = new Error();
     error.status = 401;
@@ -153,4 +158,4 @@ const removeOne = async (req, res, next) => {
   dbResponse.affectedRows ? res.status(204).end() : next();
 };
 
-module.exports = { listAll, listOne, register, login, forgot, reset, saveNewPass, removeOne, editOne };
+module.exports = { listAll, listOne, register, login, forgot, ingreso, reset, saveNewPass, removeOne, editOne };
