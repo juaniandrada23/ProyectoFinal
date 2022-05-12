@@ -59,6 +59,7 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
   const cleanBody = matchedData(req)
   const dbResponse = await loginUser(req.body.email);
+  res.render("login")
   if (!dbResponse.length) return next();
   if (await checkPassword(req.body.password, dbResponse[0].password)) {
     const user = {
@@ -91,7 +92,6 @@ const transport = nodemailer.createTransport({
     pass: process.env.mailtrap_pass
   }
 });
-
 
 
 /*forgot password*/
