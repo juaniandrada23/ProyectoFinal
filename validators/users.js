@@ -28,7 +28,7 @@ const validatorCreateUser = [
     }
 ]
 
-validatorLoginUser = [
+const validatorLoginUser = [
     check("email")
         .exists().withMessage("Email is required")
         .isEmail().withMessage("Must be a valid email address")
