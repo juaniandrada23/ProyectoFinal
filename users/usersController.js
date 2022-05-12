@@ -14,6 +14,12 @@ const { matchedData } = require("express-validator")
 const nodemailer = require("nodemailer")
 const url = process.env.public_url;
 
+//Mostramos el form de la sesion 
+const newSesion = async (req, res, next) => {
+  const user = req.params.user
+  res.render("pantalla", {user})
+}
+
 //get all users
 const listAll = async (req, res, next) => {
   const dbResponse = await getAllUsers();
@@ -55,11 +61,6 @@ const register = async (req, res, next) => {
   res.status(201).json({ user: req.body.name, Token_Info: tokenData });
 };
 
-//Mostramos el form de la sesion 
-const newSesion = async (req, res, next) => {
-  const user = req.params.user
-  res.render("pantalla", {user})
-}
 //Login user
 const login = async (req, res, next) => {
   const cleanBody = matchedData(req)
