@@ -71,7 +71,6 @@ const login = async (req, res, next) => {
       token: await tokenSign(user, "2h"),
       user,
     };
-    res.render("login", {user, checkPassword, cleanBody})
     res.status(200).json({ message: `User ${user.name} Logged in!`, Token_info: tokenData });
   } else {
     let error = new Error();
@@ -80,6 +79,14 @@ const login = async (req, res, next) => {
     next(error);
   }
 };
+
+//LOGIN (POST)
+//mostramos el formulario de recuperación de contraseña
+const ingreso = async (req, res, next) => {
+  const users = req.params.user
+  res.render("ingreso", {users})
+}
+
 
 /*configurar nodemailer*/
 const transport = nodemailer.createTransport({
@@ -153,4 +160,4 @@ const removeOne = async (req, res, next) => {
   dbResponse.affectedRows ? res.status(204).end() : next();
 };
 
-module.exports = { listAll, listOne, register, login, forgot, reset, saveNewPass, removeOne, editOne };
+module.exports = { listAll, listOne, register, login, forgot, reset, ingreso, saveNewPass, removeOne, editOne };
