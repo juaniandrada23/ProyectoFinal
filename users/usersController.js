@@ -16,7 +16,7 @@ const url = process.env.public_url;
 
 //Mostramos el form de la sesion 
 const newSesion = async (req, res, next) => {
-  res.render("pantalla")
+  res.render("pantalla");
 }
 
 //get all users
