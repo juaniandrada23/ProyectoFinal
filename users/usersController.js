@@ -15,7 +15,7 @@ const nodemailer = require("nodemailer")
 const url = process.env.public_url;
 
 //Mostramos el form de la sesion 
-const newSesion = async (req, res, next) => {
+const newSesion = (req, res, next) => {
   res.render("pantalla");
 }
 

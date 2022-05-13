@@ -14,9 +14,9 @@ router.get("/:id", listOne);
 //Register new user
 router.post("/register", fileUpload.single("file"), validatorCreateUser, register)
 
-//Login user
+//Inicio de sesión
 router.get("/sesion", newSesion)
-
+//Login user
 router.post("/login", validatorLoginUser, login)
 
 //Forgot password
