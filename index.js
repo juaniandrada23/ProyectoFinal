@@ -2,13 +2,15 @@ require("dotenv").config();
 require("./data/config");
 const PORT = process.env.PORT;
 const express = require("express");
-const hbs = require("express-handlebars")
-const path = require("path")
+const hbs = require("express-handlebars");
+const path = require("path");
+const cors = require("cors");
 
 const server = express();
 server.use(express.json());
 server.use(express.urlencoded({ extended: true })); //lectura de formularios
 server.use(express.static("public"));
+server.use(cors());
 
 //bootstrap files access via static routes
 server.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
@@ -29,6 +31,12 @@ server.get("/", (req, res) => {
 
 //Router for /users endpoint
 server.use("/users", require("./users/usersRoute"));
+
+//Router for /turnos endpoint
+server.use("/turnos", require("./turnos/turnosRoute"));
+
+//Router for /pacientes endpoint
+server.use("/pacientes", require("./pacientes/pacientesRoute"));
 
 //Router for /posts endpoint
 server.use("/posts", require("./posts/postsRoute"));
@@ -54,5 +62,5 @@ server.use((error, req, res, next) => {
 server.listen(PORT, (err) => {
   err
     ? console.log(`Error: ${err}`)
-    : console.log(`App corre en http://localhost:${PORT}`);
+    : console.log(`App corre en https://apideploy-proyecto.herokuapp.com`);
 });
