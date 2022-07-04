@@ -32,12 +32,6 @@ server.get("/", (req, res) => {
 //Router for /users endpoint
 server.use("/users", require("./users/usersRoute"));
 
-//Router for /turnos endpoint
-server.use("/turnos", require("./turnos/turnosRoute"));
-
-//Router for /pacientes endpoint
-server.use("/pacientes", require("./pacientes/pacientesRoute"));
-
 //Router for /posts endpoint
 server.use("/posts", require("./posts/postsRoute"));
 
