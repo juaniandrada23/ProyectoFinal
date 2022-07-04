@@ -32,6 +32,7 @@ server.get("/", (req, res) => {
 //Router for /users endpoint
 server.use("/users", require("./users/usersRoute"));
 
+
 //Router for /posts endpoint
 server.use("/posts", require("./posts/postsRoute"));
 
