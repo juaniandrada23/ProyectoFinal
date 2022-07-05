@@ -1,61 +1,32 @@
-require("dotenv").config();
-require("./data/config");
-const PORT = process.env.PORT || 3000;
-const express = require("express");
-const hbs = require("express-handlebars")
-const path = require("path")
+const express = require('express')
+const mysql = require('mysql')
+const myconn = require('express-myconnection')
+const cors = require('cors');
 
-const server = express();
-server.use(express.json());
-server.use(express.urlencoded({ extended: true })); //lectura de formularios
-server.use(express.static("public"));
+const routes = require('./pacientes/pacientesRoute')
 
-//bootstrap files access via static routes
-server.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
-server.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
+const app = express()
+app.set('port', process.env.PORT || 9000)
+const dbOptions = {
+    host: 'us-cdbr-east-05.cleardb.net',
+    port: 3306,
+    user: 'b9247a1f5e2338',
+    password: '1b503f4e',
+    database: 'heroku_5dfa85f905e247b'
+}
 
-//Handlebars setup
-server.set("view engine", "hbs");
-server.set("views", path.join(__dirname, "views")) // "./views"
-server.engine("hbs", hbs.engine({ extname: "hbs" }))
+// middlewares -------------------------------------
+app.use(myconn(mysql, dbOptions, 'single'))
+app.use(express.json())
+app.use(cors())
 
-server.get("/", (req, res) => {
-  const content = `
-    <h1>Server con Express</h1>
-    <pre>primera prueba de servidor con Node y el framework Express</pre>
-    `;
-  res.send(content);
-});
+// routes -------------------------------------------
+app.get('/', (req, res)=>{
+    res.send('Welcome to my API')
+})
+app.use('/api', routes)
 
-//Router for /users endpoint
-server.use("/users", require("./users/usersRoute"));
-
-//Router para /pacientes endpoint
-server.use("/pacientes", require("./pacientes/pacientesRoute"));
-
-//Router for /posts endpoint
-server.use("/posts", require("./posts/postsRoute"));
-
-//catch all route (404)
-server.use((req, res, next) => {
-  let error = new Error();
-  error.status = 404;
-  error.message = "Resource not found";
-  next(error);
-});
-
-//Error handler
-server.use((error, req, res, next) => {
-  if (!error.status) {
-    error.status = 500;
-    error.message = "Internal Error Server"
-  }
-
-  res.status(error.status).json({ status: error.status, message: error.message });
-});
-
-server.listen(PORT, (err) => {
-  err
-    ? console.log(`Error: ${err}`)
-    : console.log(`App corre en http://localhost:${PORT}`);
-});
+// server running -----------------------------------
+app.listen(app.get('port'), ()=>{
+    console.log('server running on port', app.get('port'))
+})
