@@ -14,10 +14,7 @@ const { matchedData } = require("express-validator")
 const nodemailer = require("nodemailer")
 const url = process.env.public_url;
 
-//Mostramos el form de la sesion 
-const newSesion = (req, res, next) => {
-  res.render("pantalla");
-}
+
 
 //get all users
 const listAll = async (req, res, next) => {
@@ -157,4 +154,4 @@ const removeOne = async (req, res, next) => {
   dbResponse.affectedRows ? res.status(204).end() : next();
 };
 
-module.exports = { listAll, listOne, register, login, forgot, newSesion, reset, saveNewPass, removeOne, editOne };
+module.exports = { listAll, listOne, register, login, forgot, reset, saveNewPass, removeOne, editOne };
